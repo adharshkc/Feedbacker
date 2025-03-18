@@ -45,7 +45,7 @@ const router = express.Router()
  *             schema:
  *               $ref: '#/components/schemas/Error'
  */
-router.post("/", authenticate, validate(feedbackSchema), submitFeedback);
+router.post("/feedback", authenticate, validate(feedbackSchema), submitFeedback);
 
 /**
  * @swagger
@@ -93,7 +93,7 @@ router.post("/", authenticate, validate(feedbackSchema), submitFeedback);
  *             schema:
  *               $ref: '#/components/schemas/Error'
  */
-router.get('/:userId', authenticate, getUserFeedback);
+router.get('/feedback/:userId', authenticate, getUserFeedback);
 
 /**
  * @swagger

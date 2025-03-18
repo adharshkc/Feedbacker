@@ -6,8 +6,10 @@ import {
   LogOut, 
 } from 'lucide-react';
 import FeedbackCard from './FeedbackDashboard';
+import { useNavigate } from 'react-router';
 
 const Sidebar = () => {
+  const navigate = useNavigate()
   const [isOpen, setIsOpen] = useState(false);
   
   const toggleSidebar = () => {
@@ -17,7 +19,10 @@ const Sidebar = () => {
   const menuItems = [
     { name: 'Dashboard', icon: Home },
   ];
-
+const onLogout = ()=>{
+  localStorage.removeItem("token")
+  navigate("/login")
+}
   return (
     <div className="flex h-screen">
       {isOpen && (
@@ -61,6 +66,7 @@ const Sidebar = () => {
         <div className="absolute bottom-0 w-full p-4 border-t border-gray-700">
           <a 
             href="#" 
+            onClick={onLogout}
             className="flex items-center text-gray-300 hover:text-white transition-colors duration-200"
           >
             <LogOut size={20} className="mr-3" />

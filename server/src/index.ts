@@ -14,7 +14,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 app.use('/api/auth', authRoutes);
-app.use('/api/',feedbackRoutes)
+app.use('/api',feedbackRoutes)
 connectDb()
 setupSwagger(app);
 

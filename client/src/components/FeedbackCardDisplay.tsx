@@ -1,86 +1,33 @@
 import React from 'react';
-import { Bell, HelpCircle, Bug, Star, Settings, User, AlertCircle } from 'lucide-react';
+import { User, AlertCircle } from 'lucide-react';
 
 interface Feedback {
     id: string;
     name: string;
     email: string;
-    category: string;
-    priority: 'low' | 'medium' | 'high' | 'critical';
-    title: string;
-    description: string;
-    status: 'new' | 'in-review' | 'in-progress' | 'resolved' | 'closed';
-    createdAt: string;
+    message: string;
+    created_at: string;
 }
 
 interface FeedbackCardDisplayProps {
     feedbacks: Feedback[];
-    onStatusChange?: (id: string, status: Feedback['status']) => void;
 }
 
 const FeedbackCardDisplay: React.FC<FeedbackCardDisplayProps> = ({
     feedbacks,
 }) => {
-    // Function to get appropriate icon based on category
-    const getCategoryIcon = (category: string) => {
-        switch (category) {
-            case 'bug':
-                return <Bug className="h-5 w-5 text-red-600" />;
-            case 'feature':
-                return <Star className="h-5 w-5 text-purple-600" />;
-            case 'improvement':
-                return <Settings className="h-5 w-5 text-blue-600" />;
-            case 'question':
-                return <HelpCircle className="h-5 w-5 text-yellow-600" />;
-            default:
-                return <Bell className="h-5 w-5 text-gray-600" />;
-        }
-    };
-
-    // Function to get color based on priority
-    const getPriorityColor = (priority: Feedback['priority']) => {
-        switch (priority) {
-            case 'critical':
-                return 'bg-red-100 text-red-800';
-            case 'high':
-                return 'bg-orange-100 text-orange-800';
-            case 'medium':
-                return 'bg-yellow-100 text-yellow-800';
-            case 'low':
-                return 'bg-green-100 text-green-800';
-            default:
-                return 'bg-gray-100 text-gray-800';
-        }
-    };
-
-    // Function to get color based on status
-    const getStatusColor = (status: Feedback['status']) => {
-        switch (status) {
-            case 'new':
-                return 'bg-blue-100 text-blue-800';
-            case 'in-review':
-                return 'bg-purple-100 text-purple-800';
-            case 'in-progress':
-                return 'bg-yellow-100 text-yellow-800';
-            case 'resolved':
-                return 'bg-green-100 text-green-800';
-            case 'closed':
-                return 'bg-gray-100 text-gray-800';
-            default:
-                return 'bg-gray-100 text-gray-800';
-        }
-    };
-
-    // Format date
     const formatDate = (dateString: string) => {
+        if (!dateString) return "Invalid date"; 
         const date = new Date(dateString);
+        if (isNaN(date.getTime())) return "Invalid date"; 
+        
         return new Intl.DateTimeFormat('en-US', {
             month: 'short',
             day: 'numeric',
             year: 'numeric',
         }).format(date);
     };
-
+    
     return (
         <div className="space-y-6">
             <div className="flex justify-between items-center">
@@ -98,26 +45,15 @@ const FeedbackCardDisplay: React.FC<FeedbackCardDisplayProps> = ({
                 </div>
             ) : (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {feedbacks.map((feedback) => (
+                    {feedbacks?.map((feedback) => (
                         <div key={feedback.id} className="bg-white shadow rounded-lg overflow-hidden hover:shadow-md transition-shadow duration-300">
                             <div className="p-5">
                                 <div className="flex justify-between items-start">
-                                    <div className="text-sm font-medium text-gray-500">{formatDate(feedback.createdAt)}</div>
-                                    <div className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getPriorityColor(feedback.priority)}`}>
-                                        {feedback.priority.charAt(0).toUpperCase() + feedback.priority.slice(1)}
-                                    </div>
+                                    <div className="text-sm font-medium text-gray-500">{formatDate(feedback.created_at)}</div>
                                 </div>
-
-                                <div className="mt-4 flex items-center">
-                                    {getCategoryIcon(feedback.category)}
-                                    <h3 className="ml-2 text-lg font-medium text-gray-900 truncate" title={feedback.title}>
-                                        {feedback.title}
-                                    </h3>
-                                </div>
-
                                 <div className="mt-3">
                                     <p className="text-sm text-gray-600 line-clamp-3">
-                                        {feedback.description}
+                                        {feedback.message}
                                     </p>
                                 </div>
 
@@ -128,23 +64,7 @@ const FeedbackCardDisplay: React.FC<FeedbackCardDisplayProps> = ({
                             </div>
 
                             <div className="border-t border-gray-200 px-5 py-3 bg-gray-50 flex justify-between items-center">
-                                <div className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getStatusColor(feedback.status)}`}>
-                                    {feedback.status.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')}
-                                </div>
-
-                                {/* {onStatusChange && (
-                                    <select
-                                        value={feedback.status}
-                                        onChange={(e) => onStatusChange(feedback.id, e.target.value as Feedback['status'])}
-                                        className="text-sm border border-gray-300 rounded-md py-1 pl-2 pr-8 bg-white focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                                    >
-                                        <option value="new">New</option>
-                                        <option value="in-review">In Review</option>
-                                        <option value="in-progress">In Progress</option>
-                                        <option value="resolved">Resolved</option>
-                                        <option value="closed">Closed</option>
-                                    </select>
-                                )} */}
+                               
                             </div>
                         </div>
                     ))}
@@ -152,6 +72,6 @@ const FeedbackCardDisplay: React.FC<FeedbackCardDisplayProps> = ({
             )}
         </div>
     );
-};
+}
 
 export default FeedbackCardDisplay;

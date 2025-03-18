@@ -6,9 +6,9 @@ function getToken() {
     return token;
 }
 
-export const fetchFeedbacks = async () => {
+export const fetchFeedbacks = async (userId:string|undefined) => {
     const token = getToken();
-    return await axios.get(`${serverUrl}/feedbacks`, {
+    return await axios.get(`${serverUrl}/api/feedback/${userId}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -16,6 +16,18 @@ export const fetchFeedbacks = async () => {
     
 };
 
+export const feedbackSubmit = async (formDatas:{name:string, email:string, message:string})=>{
+  const token = getToken();
+  return await axios.post(`${serverUrl}/api/feedback/`,formDatas,{
+    headers:{
+      Authorization: `Bearer ${token}`
+    }
+  })
+}
+
 export const loginUser = async (credentials: { email: string; password: string }) => {
-  return await axios.post(`${serverUrl}/login`, credentials);
+  return await axios.post(`${serverUrl}/api/auth/login`, credentials);
+};
+export const registerUser = async (credentials: { name:string, email: string; password: string }) => {
+  return await axios.post(`${serverUrl}/api/auth/register`, credentials);
 };

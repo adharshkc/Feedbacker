@@ -1,11 +1,13 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import imageLogin from "../assets/image.png";
 import { useLogin } from "../hooks/useAuth";
 import { LoginFormData, loginSchema } from "../schemas/authSchema";
+import { useEffect } from "react";
 
 const Login = () => {
+  const navigate = useNavigate()
     const {
       register,
       handleSubmit,
@@ -19,6 +21,13 @@ const Login = () => {
     const onSubmit = (data: LoginFormData) => {
       mutate(data);
     };
+
+    useEffect(()=>{
+      const token = localStorage.getItem("token")
+      if(token){
+        navigate('/dashboard')
+      }
+    },[])
   
     return (
       <div className="flex items-center justify-center h-[90vh] w-full px-5 sm:px-0">
@@ -67,13 +76,13 @@ const Login = () => {
               <div className="mt-8">
                 <button
                   type="submit"
-                  disabled={status === "pending"} // Use `status` instead of `isLoading`
+                  disabled={status === "pending"} 
                   className="bg-blue-700 text-white font-bold py-2 px-4 w-full rounded hover:bg-blue-600 disabled:bg-blue-400"
                 >
                   {status === "pending" ? "Logging in..." : "Login"}
                 </button>
               </div>
-              {status === "error" && ( // Use `status` instead of `isError`
+              {status === "error" && ( 
                 <p className="text-red-500 text-xs mt-2 text-center">
                   {error.response?.data?.message || "An error occurred during login."}
                 </p>

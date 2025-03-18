@@ -23,7 +23,7 @@ const FeedbackDashboard: React.FC = () => {
   const { data: feedbacks, isLoading } = useFeedback();
   const [activeTab, setActiveTab] = useState<"form" | "list">("list");
 
-
+  console.log(feedbacks)
 
 
   if(isLoading){
@@ -60,10 +60,10 @@ const FeedbackDashboard: React.FC = () => {
       {/* Content */}
       {activeTab === 'form' ? (
         <FeedbackForm />
-      ) : ("hello"
-        // <FeedbackCardDisplay
-        //   feedbacks={feedbacks}
-        // />
+      ) : (
+        <FeedbackCardDisplay
+          feedbacks={feedbacks}
+        />
       )}
     </div>
   );
