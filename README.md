@@ -73,7 +73,7 @@ Feedbacker is a comprehensive Feedback Management System designed to streamline 
 ### Backend
 1. Clone the repository:
    ```bash
-   git clone https://github.com/your-repo/feedbacker.git
+   git clone https://github.com/adharshkc/Feedbacker.git
    cd feedbacker/server
 
 2. Install Dependencies:
