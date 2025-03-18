@@ -64,8 +64,6 @@ Feedbacker is a comprehensive Feedback Management System designed to streamline 
    - Unit testing for React components using Vitest.
 7. **State Management**
    - Zustand for global state management.
-8. **Reusable Components**
-   - Buttons, forms, cards, and other reusable UI components.
 
 ---
 ## 🛠️ Setup Instructions
