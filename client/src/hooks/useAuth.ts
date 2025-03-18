@@ -21,7 +21,6 @@ export const useLogin = () => {
     mutationFn: userLogin,
     onSuccess: (data) => {
       localStorage.setItem("token", data?.data.token);
-      console.log(data.data.id)
       const user = {
         id: data.data.id,
         name: data.data.name,
@@ -30,7 +29,6 @@ export const useLogin = () => {
       };
       setUser(user);
     
-      console.log(data)
       if (data.data.role == "ADMIN") {
         navigate("/admin");
       } else {

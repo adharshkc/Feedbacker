@@ -28,7 +28,6 @@ export const registerUser = async (userData: any) => {
     email: user.email,
     role: user.role,
   });
-  console.log(token)
   return {
     id: user.id,
     name: user.name,

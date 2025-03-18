@@ -2,32 +2,32 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Link, useNavigate } from "react-router";
 import imageLogin from "../assets/image.png";
-import { useLogin } from "../hooks/useAuth";
-import { LoginFormData, loginSchema } from "../schemas/authSchema";
+import { useRegister } from "../../hooks/useAuth";
+import { registerSchema, RegisterFormData } from "../../schemas/authSchema";
 import { useEffect } from "react";
 
-const Login = () => {
+const Register = () => {
   const navigate = useNavigate()
     const {
       register,
       handleSubmit,
       formState: { errors },
-    } = useForm<LoginFormData>({
-      resolver: zodResolver(loginSchema),
+    } = useForm<RegisterFormData>({
+      resolver: zodResolver(registerSchema),
     });
   
-    const { mutate, status, error } = useLogin();
+    const { mutate, status, error } = useRegister();
   
-    const onSubmit = (data: LoginFormData) => {
+    const onSubmit = (data: RegisterFormData) => {
       mutate(data);
     };
-
-    useEffect(()=>{
-      const token = localStorage.getItem("token")
-      if(token){
-        navigate('/dashboard')
-      }
-    },[])
+      useEffect(()=>{
+          const token = localStorage.getItem("token")
+          if(token){
+            navigate('/dashboard')
+          }
+        },[])
+      
   
     return (
       <div className="flex items-center justify-center h-[90vh] w-full px-5 sm:px-0">
@@ -39,8 +39,23 @@ const Login = () => {
             }}
           ></div>
           <div className="w-full p-8 lg:w-1/2">
-            <p className="text-xl text-gray-600 text-center">Sign In</p>
+            <p className="text-xl text-gray-600 text-center">Sign Up</p>
             <form onSubmit={handleSubmit(onSubmit)}>
+              <div className="mt-4">
+                <label className="block text-gray-700 text-sm font-bold mb-2">
+                  Name
+                </label>
+                <input
+                  {...register("name")}
+                  className={`text-gray-700 border ${
+                    errors.name ? "border-red-500" : "border-gray-300"
+                  } rounded py-2 px-4 block w-full focus:outline-2 focus:outline-blue-700`}
+                  type="name"
+                />
+                {errors.name && (
+                  <p className="text-red-500 text-xs mt-1">{errors.name.message}</p>
+                )}
+              </div>
               <div className="mt-4">
                 <label className="block text-gray-700 text-sm font-bold mb-2">
                   Email Address
@@ -90,11 +105,11 @@ const Login = () => {
             </form>
             <div className="mt-4 flex items-center w-full text-center">
               <Link
-                to={"/register"}
+                to={"/login"}
                 className="text-xs text-gray-500 capitalize text-center w-full"
               >
                 Don&apos;t have any account yet?
-                <span className="text-blue-700"> Sign Up</span>
+                <span className="text-blue-700"> Sign In</span>
               </Link>
             </div>
           </div>
@@ -103,4 +118,4 @@ const Login = () => {
     );
   };
   
-  export default Login
+  export default Register

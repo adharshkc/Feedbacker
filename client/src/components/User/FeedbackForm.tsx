@@ -1,8 +1,8 @@
 import React from 'react';
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useSubmitFeedback } from "../hooks/useFeedback"; 
-import { FeedbackFormData, feedbackSchema } from '../schemas/feedbackSchema';
+import { useSubmitFeedback } from "../../hooks/useFeedback"; 
+import { FeedbackFormData, feedbackSchema } from '../../schemas/feedbackSchema';
 
 
 const FeedbackForm: React.FC = () => {
@@ -19,9 +19,7 @@ const FeedbackForm: React.FC = () => {
   const [isSubmitted, setIsSubmitted] = React.useState<boolean>(false);
 
   const onSubmit = (data: FeedbackFormData) => {
-    console.log('Form submitted:', data);
     
-    // Use the mutation from your hook
     mutate(data, {
       onSuccess: () => {
         setIsSubmitted(true);
@@ -64,7 +62,6 @@ const FeedbackForm: React.FC = () => {
       </div>
       
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-        {/* Personal Information */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
             <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
@@ -107,7 +104,6 @@ const FeedbackForm: React.FC = () => {
           {errors.message && <p className="mt-1 text-sm text-red-500">{errors.message.message}</p>}
         </div>
         
-        {/* Form Actions */}
         <div className="flex items-center justify-end space-x-4">
           <button
             type="button"

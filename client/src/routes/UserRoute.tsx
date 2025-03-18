@@ -1,14 +1,13 @@
 import { Navigate, Route, Routes } from "react-router"
-import Login from "../components/Login"
-import Register from "../components/Register"
-import Sidebar from "../components/Sidebar"
+import Login from "../components/common/Login"
+import Register from "../components/common/Register"
+import Sidebar from "../components/User/Sidebar"
 import { ReactNode } from "react";
 
 interface ProtectedRouteProps {
   children: ReactNode;
 }
 
-// Create a ProtectedRoute component with typed props
 const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
   const token = localStorage.getItem("token");
   

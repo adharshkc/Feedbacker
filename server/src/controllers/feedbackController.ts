@@ -10,7 +10,6 @@ export const submitFeedback = async (req: Request, res: Response) => {
   try {
     const { id } = req?.user;
     const message = req.body;
-    console.log(id);
 
     const feedback = await createFeedback(id, message.message);
     res
@@ -25,7 +24,6 @@ export const submitFeedback = async (req: Request, res: Response) => {
 export const getUserFeedback = async (req: Request, res: Response) => {
   try {
     const { id } = req.user!;
-    console.log(id, req.params.userId);
     if (id !== Number(req.params.userId)) {
       res.status(403).json({ message: "Unauthorized to view this feedback" });
       return;
@@ -44,7 +42,6 @@ export const getAllFeedbacksController = async (
   res: Response,
 ) => {
   try {
-    console.log(req.user)
     const feedbacks = await getAllFeedbacks();
     res.status(200).json({ feedbacks });
   } catch (error) {

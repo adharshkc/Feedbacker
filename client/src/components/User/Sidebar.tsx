@@ -38,7 +38,7 @@ const onLogout = ()=>{
         lg:relative lg:translate-x-0
       `}>
         <div className="p-4 flex justify-between items-center border-b border-gray-700">
-          <h2 className="text-xl font-bold">My App</h2>
+          <h2 className="text-xl font-bold">Feedbacker</h2>
           <button 
             onClick={toggleSidebar} 
             className="lg:hidden"
@@ -85,12 +85,7 @@ const onLogout = ()=>{
           <h1 className="text-xl font-semibold">Dashboard</h1>
         </header>
         
-        {/* <main className="p-6">
-          <h2 className="text-5xl text-center font-bold mb-4">Welcome to Feedbacker App</h2>
-          <p className="text-gray-600 text-xl text-center">This system allows you to easily submit feedback on your experience. Your input is crucial for our ongoing improvement.</p>
-        </main> */}
         <main>
-            {/* <FeedbackForm/> */}
             <FeedbackCard/>
         </main>
       </div>

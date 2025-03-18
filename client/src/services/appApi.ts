@@ -31,3 +31,13 @@ export const loginUser = async (credentials: { email: string; password: string }
 export const registerUser = async (credentials: { name:string, email: string; password: string }) => {
   return await axios.post(`${serverUrl}/api/auth/register`, credentials);
 };
+
+
+export const fetchAllFeedbacks = async ()=>{
+  const token = getToken();
+  return await axios.get(`${serverUrl}/api/feedbacks/all`,{
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  })
+}

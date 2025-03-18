@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useMutation, useQuery, useQueryClient, UseQueryOptions } from "@tanstack/react-query";
 import { useFeedbackStore } from "../zustand/FeedbackStore"
-import { feedbackSubmit, fetchFeedbacks } from "../services/appApi";
+import { feedbackSubmit, fetchAllFeedbacks, fetchFeedbacks } from "../services/appApi";
 import { useUserStore } from "../zustand/useUserStore";
 
 
@@ -12,6 +12,11 @@ const getFeedbacks = async (userId:string|undefined)=>{
     const response = await fetchFeedbacks(userId)
     console.log(response.data.feedbacks)
     return response.data.feedbacks
+}
+
+const getAllFeedbacks = async ()=>{
+    const response = await fetchAllFeedbacks()
+    return response.data.feedbacks;
 }
 
 const submitFeedbacks = async(formDatas: {name:string, email:string, message:string}) =>{
@@ -42,3 +47,14 @@ export const useSubmitFeedback = ()=>{
     })
 }
 
+
+export const useAllFeedback = ()=>{
+    const {setFeedbacks} = useFeedbackStore();
+    return useQuery({
+        queryKey:["allFeedbacks"],
+        queryFn:getAllFeedbacks,
+        onSuccess: (data:any)=>{
+            setFeedbacks(data)
+        }
+    }as UseQueryOptions<any, Error, any, string[]>)
+}
